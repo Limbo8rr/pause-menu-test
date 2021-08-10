@@ -7,7 +7,7 @@ controller.menu.onEvent(ControllerButtonEvent.Pressed, function () {
             value.setVelocity(0, 0)
         }
         blockMenu.setControlsEnabled(true)
-        blockMenu.showMenu(["Black", "Yellow", "Close Menu"], MenuStyle.List, MenuLocation.TopRight)
+        blockMenu.showMenu(["Black", "Yellow", "Close Menu", "say:...:", "sssSNAKE!!"], MenuStyle.List, MenuLocation.TopRight)
     } else {
         for (let value of sprites.allOfKind(SpriteKind.Enemy)) {
             value.setVelocity(sprites.readDataNumber(value, "prePauseVelocityX"), sprites.readDataNumber(value, "vy"))
@@ -29,6 +29,22 @@ blockMenu.onMenuOptionSelected(function (option, index) {
         blockMenu.closeMenu()
         blockMenu.setControlsEnabled(false)
         gamePaused = !(gamePaused)
+    } else if (option == "say:...:") {
+        for (let value of sprites.allOfKind(SpriteKind.Enemy)) {
+            value.setVelocity(sprites.readDataNumber(value, "prePauseVelocityX"), sprites.readDataNumber(value, "vy"))
+        }
+        blockMenu.closeMenu()
+        blockMenu.setControlsEnabled(false)
+        gamePaused = !(gamePaused)
+        game.showLongText(game.askForString("", 24), DialogLayout.Top)
+    } else if (option == "sssSNAKE!!") {
+        for (let value of sprites.allOfKind(SpriteKind.Enemy)) {
+            value.setVelocity(sprites.readDataNumber(value, "prePauseVelocityX"), sprites.readDataNumber(value, "vy"))
+        }
+        blockMenu.closeMenu()
+        blockMenu.setControlsEnabled(false)
+        gamePaused = !(gamePaused)
+        game.showLongText("sssssssssssssssssnake!!!", DialogLayout.Bottom)
     }
     blockMenu.setSelectedOption("")
 })
