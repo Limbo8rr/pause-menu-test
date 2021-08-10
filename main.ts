@@ -6,12 +6,14 @@ controller.menu.onEvent(ControllerButtonEvent.Pressed, function () {
             sprites.setDataNumber(value, "vy", value.vy)
             value.setVelocity(0, 0)
         }
+        blockMenu.setControlsEnabled(true)
         blockMenu.showMenu(["Black", "Yellow", "Close Menu"], MenuStyle.List, MenuLocation.TopRight)
     } else {
         for (let value of sprites.allOfKind(SpriteKind.Enemy)) {
             value.setVelocity(sprites.readDataNumber(value, "prePauseVelocityX"), sprites.readDataNumber(value, "vy"))
         }
         blockMenu.closeMenu()
+        blockMenu.setControlsEnabled(false)
     }
     gamePaused = !(gamePaused)
 })
@@ -20,13 +22,15 @@ blockMenu.onMenuOptionSelected(function (option, index) {
         scene.setBackgroundColor(15)
     } else if (option == "Yellow") {
         scene.setBackgroundColor(5)
-    } else {
+    } else if (option == "Close Menu") {
         for (let value of sprites.allOfKind(SpriteKind.Enemy)) {
             value.setVelocity(sprites.readDataNumber(value, "prePauseVelocityX"), sprites.readDataNumber(value, "vy"))
         }
         blockMenu.closeMenu()
+        blockMenu.setControlsEnabled(false)
         gamePaused = !(gamePaused)
     }
+    blockMenu.setSelectedOption("")
 })
 let gamePaused = false
 let enemySprite: Sprite = null
@@ -52,6 +56,7 @@ for (let index = 0; index < 4; index++) {
     enemySprite.setStayInScreen(true)
     enemySprite.setBounceOnWall(true)
     enemySprite.setVelocity(randint(0, 75), randint(0, 75))
-    gamePaused = false
-    blockMenu.setColors(15, 5)
 }
+gamePaused = false
+blockMenu.setColors(15, 5)
+blockMenu.setControlsEnabled(false)
